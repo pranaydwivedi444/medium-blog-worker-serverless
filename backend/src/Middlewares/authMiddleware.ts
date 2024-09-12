@@ -15,6 +15,7 @@ export const authMiddleware: MiddlewareHandler = async function (c, next) {
     const secret = c.env.JWT_SECRET;
     const response = await verify(token, secret);
     if (response.id) {
+      c.set("authorId", response.id);
       await next();
     }
   } catch (error) {

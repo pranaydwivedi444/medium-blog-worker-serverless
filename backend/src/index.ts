@@ -1,7 +1,9 @@
 import { Hono } from "hono";
-import blogsApi from "./routes/api";
+import authRouter from "./routes/authRouter";
+import blogsApi from "./routes/blogsRouter";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
+import { auth } from "hono/utils/basic-auth";
 
 const app = new Hono<{
   Bindings: {
@@ -20,7 +22,8 @@ app.use("*", async (c, next) => {
   await next();
 });
 //forwarding requests to api routes
-app.route("/api/v1/", blogsApi);
+app.route("/api/v1/blogs", blogsApi);
+app.route("/api/v1/user", authRouter);
 
 app.get("/", (c) => {
   return c.text("Hello Hono!");

@@ -1,12 +1,12 @@
 import { Hono } from "hono";
-import { PrismaClient } from "@prisma/client/edge";
-import { withAccelerate } from "@prisma/extension-accelerate";
 import { decode, jwt, sign, verify } from "hono/jwt";
-import { authMiddleware } from "../Middlewares/authMiddleware";
 
 const app = new Hono<{
   Bindings: {
     JWT_SECRET: string;
+  };
+  Variables: {
+    prisma: any;
   };
 }>();
 
@@ -14,18 +14,16 @@ app.get("/", (c) => {
   return c.text("welcome to blogs");
 });
 
-app.post("/user/signup", async (c) => {
-  const prisma = new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL,
-  }).$extends(withAccelerate());
+app.post("/signup", async (c) => {
   //fetching body
   const body = await c.req.json();
+  const prisma = c.get("prisma");
   //create user in db
   try {
     const user = await prisma.user.create({
       data: {
         email: body.email,
-        name: body.name,
+        name: body.name || " ",
         password: body.password,
       },
     });
@@ -41,11 +39,8 @@ app.post("/user/signup", async (c) => {
   }
 });
 
-app.post("/user/signin", async (c) => {
-  const prisma = new PrismaClient({
-    datasourceUrl: c.env?.DATABASE_URL,
-  }).$extends(withAccelerate());
-
+app.post("/signin", async (c) => {
+  const prisma = c.get("prisma");
   const body = await c.req.json();
   const user = await prisma.user.findUnique({
     where: {
@@ -61,29 +56,6 @@ app.post("/user/signin", async (c) => {
 
   const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
   return c.json({ jwt });
-});
-
-// app.use("/blog/*", async (c, next) => {
-//   //do Authenication here
-//   await next();
-// });
-//using auth middleware
-app.use("/blog/*", authMiddleware);
-
-app.get("/blog/bulk", (c) => {
-  return c.text("blogs");
-});
-
-app.get("/blog/:id", (c) => {
-  return c.text("done");
-});
-
-app.post("/blog/", (c) => {
-  return c.text("done");
-});
-
-app.put("/blog/", (c) => {
-  return c.text("done");
 });
 
 export default app;
