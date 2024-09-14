@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { decode, jwt, sign, verify } from "hono/jwt";
-
+import {  signupInput, signinInput} from "pranaydwivedi444-zodvalidation-blog";
 const app = new Hono<{
   Bindings: {
     JWT_SECRET: string;
@@ -18,6 +18,10 @@ app.post("/signup", async (c) => {
   //fetching body
   const body = await c.req.json();
   const prisma = c.get("prisma");
+  const { success } = signupInput.safeParse(body);
+  if (!success) {
+    return c.text("invalid inputs", 411);
+  }
   //create user in db
   try {
     const user = await prisma.user.create({
@@ -42,6 +46,10 @@ app.post("/signup", async (c) => {
 app.post("/signin", async (c) => {
   const prisma = c.get("prisma");
   const body = await c.req.json();
+  const { success } = signinInput.safeParse(body);
+  if (!success) {
+    return c.text("invalid inputs", 411);
+  }
   const user = await prisma.user.findUnique({
     where: {
       email: body.email,

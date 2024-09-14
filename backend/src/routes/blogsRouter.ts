@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { decode, jwt, sign, verify } from "hono/jwt";
 import { authMiddleware } from "../Middlewares/authMiddleware";
-
+import {createBlogInput,updateBlogInput} from "pranaydwivedi444-zodvalidation-blog"
 const app = new Hono<{
   Bindings: {
     JWT_SECRET: string;
@@ -74,6 +74,11 @@ app.post("/", async (c) => {
   const prisma = c.get("prisma");
   try {
     const body = await c.req.json();
+    //adding zod validation 
+    const {success} = createBlogInput.safeParse(body);
+     if(!success){
+      throw new Error("invalid inputs");
+    }
     //take primsa and post blogs
     const blog = await prisma.post.create({
       data: {
@@ -87,7 +92,7 @@ app.post("/", async (c) => {
       id: blog.id,
     });
   } catch (error) {
-    return c.text("Error creating blog");
+    return c.text("Error creating blog" + error);
   }
 });
 
@@ -96,6 +101,10 @@ app.put("/", async (c) => {
   const prisma = c.get("prisma");
   try {
     const body = await c.req.json();
+    const { success } = updateBlogInput.safeParse(body);
+    if (!success) {
+      throw new Error("invalid inputs");
+    }
     //take primsa and post blogs
     const blog = await prisma.post.update({
       where: {
@@ -109,7 +118,7 @@ app.put("/", async (c) => {
     });
     return c.text("updated post");
   } catch (error) {
-    return c.text("Error updating  blog");
+    return c.text("Error updating  blog" + error);
   }
 });
 

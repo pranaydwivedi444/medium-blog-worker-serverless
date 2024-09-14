@@ -8,6 +8,7 @@
     "@prisma/client": "^5.19.1",
     "@prisma/extension-accelerate": "^1.1.0",
     "hono": "^4.5.11",
+    "pranaydwivedi444-zodvalidation-blog": "^1.0.0",
     "prisma": "^5.19.1"
   },
   "devDependencies": {
