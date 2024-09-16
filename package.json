@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "pranaydwivedi444-zodvalidation-blog": "^1.0.0",
+    "react-router-dom": "^6.26.2"
+  }
+}
