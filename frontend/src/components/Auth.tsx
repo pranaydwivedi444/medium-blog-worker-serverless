@@ -70,7 +70,6 @@ function Auth(props: lgProps) {
         `${backendUrl}/user/${props.loginPage ? "signin" : "signup"}`,
         formData
       );
-      console.log(response);
       //send formdata
       if (response.data.success) {
         setShowAlert({
