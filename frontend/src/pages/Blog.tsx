@@ -2,9 +2,10 @@
 function Blog() {
   return (
     <div>
-      Blog
+       Blogs
+      
     </div>
-  )
+  );
 }
 
 export default Blog

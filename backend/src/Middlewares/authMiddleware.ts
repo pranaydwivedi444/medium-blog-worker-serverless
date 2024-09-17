@@ -1,10 +1,19 @@
 import { MiddlewareHandler } from "hono";
 import { decode, jwt, sign, verify } from "hono/jwt";
+import {
+  getCookie,
+  getSignedCookie,
+  setCookie,
+  setSignedCookie,
+  deleteCookie,
+} from "hono/cookie";
 
 export const authMiddleware: MiddlewareHandler = async function (c, next) {
   try {
-    const headerToken = c.req.header("Authorization") || "";
-    const token = headerToken.split(" ")[1];
+    // const headerToken = c.req.header("Authorization") || "";
+    // const token = headerToken.split(" ")[1];
+    const cookie_secret = c.env.COOKIE_SECRET;
+    const token = await getSignedCookie(c, cookie_secret, "bearer_token");
     if (!token) {
       c.status(401);
       return c.json({
