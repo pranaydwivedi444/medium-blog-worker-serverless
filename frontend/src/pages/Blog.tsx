@@ -1,33 +1,50 @@
-import { useEffect } from "react";
+
 import { useParams } from "react-router-dom";
-import { backendUrl } from "../config";
-import axios from "axios";
+
+import MainBlog from "../components/UI/MainBlog";
+import Skeleton from "../components/UI/Skeleton";
+import AuthorProfileSideComponent from "../components/UI/AuthorProfileSideComponent";
+
+import useFetchBlogs from "../components/hooks/useFetchBlogs";
+import AlertComponent from "../components/UI/AlertComponent";
 
 function Blog() {
   const { id } = useParams();
-  async function fetchBlogData () {
-    try {
-       const response = await axios.get(`${backendUrl}/blogs/${id}`,{
-        withCredentials: true
-       });
-       console.log(response.data);
-    } catch (error) {
-      
-    }
-   
+  const { loading, showError, articlesData } = useFetchBlogs(
+    `blogs/${id}`,
+    false
+  );
+
+  if (loading) {
+    return <Skeleton />;
   }
-  // Fetch blog data based on id
-
-  useEffect( () => {
-    console.log(id);
-    try {
-      fetchBlogData();
-    } catch (error) {
-      console.error(error);
-    }
-  },[]);
-
-  return <div>Blogs</div>;
+  if (showError) {
+    return (
+      <AlertComponent
+        postivetype={false}
+        alertMessageDescription="API Loading Error"
+        alertMessageTitle="Api Error"
+      />
+    );
+  }
+  return (
+    <>
+      <div className="grid  md:grid-cols-12">
+        <div className="col-span-9">
+          {" "}
+          {
+            //@ts-ignore
+            <MainBlog  content={articlesData.posts.content}  title={articlesData.posts.title}  date={articlesData.posts.createdAt}
+            />
+          }
+        </div>
+        <div className="col-span-3 invisible md:visible">
+          {" "}
+          <AuthorProfileSideComponent />
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default Blog;
