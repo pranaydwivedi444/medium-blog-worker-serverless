@@ -1,8 +1,6 @@
 # Medium Blog Clone
 
-Deployed Backend Url = https://backend.pranaydwivedi444.workers.dev/api/v1
-
-Here’s an improved README.md file that covers both the frontend and backend parts of your Medium blog clone, along with the additional tools and features you’ve mentioned. It's structured to provide a clear overview of the project, installation steps, and the technology stack.
+Deployed Backend Url = https://backend.pranaydwivedi444.workers.dev
 
 Medium Blog Clone
 Overview
