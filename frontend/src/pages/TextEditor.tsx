@@ -11,7 +11,7 @@ function TextEditor() {
   const [isChecked, setIsChecked] = useState(false);
   const [inputArticleTitle,setInputArticleTitle] = useState("");
   const navigate = useNavigate();
-  const postRequest = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const postRequest = async () => {
     if (editorRef.current) {
       //axios api call post
       try {
