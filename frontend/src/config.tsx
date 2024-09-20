@@ -47,3 +47,8 @@ export const editorConfig = {
   content_style:
     "body { font-family:Helvetica,Arial,sans-serif; font-size:14px ; padding:4px; margin:2px; }",
 };
+export const geminiAPI =
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
+export const summaryPrompt =
+  "Please summarize the following article in a concise and clear way, highlighting the main points and key takeaways. Ensure the summary is engaging and suitable for readers who want a quick overview of the content, and not more than 450 characters. The article is:";
+

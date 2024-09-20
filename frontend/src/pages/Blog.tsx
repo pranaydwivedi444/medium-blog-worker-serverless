@@ -7,6 +7,7 @@ import AuthorProfileSideComponent from "../components/UI/AuthorProfileSideCompon
 
 import useFetchBlogs from "../components/hooks/useFetchBlogs";
 import AlertComponent from "../components/UI/AlertComponent";
+import ModalComponent from "../components/UI/ModalComponent";
 
 function Blog() {
   const { id } = useParams();
@@ -37,6 +38,8 @@ function Blog() {
             <MainBlog  content={articlesData.posts.content}  title={articlesData.posts.title}  date={articlesData.posts.createdAt}
             />
           }
+         { //@ts-ignore
+          <ModalComponent content={articlesData.posts.content}/>}
         </div>
         <div className="col-span-3 invisible md:visible">
           {" "}

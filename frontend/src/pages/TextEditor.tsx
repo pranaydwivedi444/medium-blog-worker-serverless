@@ -13,11 +13,11 @@ function TextEditor() {
   const navigate = useNavigate();
   const postRequest = async (event: React.MouseEvent<HTMLButtonElement>) => {
     if (editorRef.current) {
-      console.log(editorRef.current.getContent());
       //axios api call post
       try {
         const id = await axios.post(`${backendUrl}/blogs`, {
           title: inputArticleTitle,
+          //@ts-ignore
           content: editorRef.current.getContent(),
           published: isChecked,
         });
@@ -50,6 +50,7 @@ function TextEditor() {
       </div>
       <Editor
         apiKey={import.meta.env.VITE_tinyMCE_API_KEY}
+        //@ts-ignore
         onInit={(_evt, editor) => (editorRef.current = editor)}
         init={editorConfig}
       />

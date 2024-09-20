@@ -1,4 +1,3 @@
-
 function Skeleton() {
   return (
     <div
@@ -80,4 +79,4 @@ function Skeleton() {
   );
 }
 
-export default Skeleton
+export default Skeleton;
