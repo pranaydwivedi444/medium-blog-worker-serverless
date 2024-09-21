@@ -22,7 +22,14 @@ app.use("*", async (c, next) => {
   c.set("prisma", prisma);
   await next();
 });
-app.use("/api/*", cors());
+app.use(
+  "/api/*",
+  cors({
+    origin: "https://medium-blog-worker-serverless.vercel.app/",
+    credentials: true,
+    allowHeaders: ["Content-Type", "Authorization"],
+  })
+);
 //forwarding requests to api routes
 app.route("/api/v1/blogs", blogsApi);
 app.route("/api/v1/user", authRouter);

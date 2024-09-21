@@ -1,7 +1,10 @@
 import { Hono } from "hono";
 import { decode, jwt, sign, verify } from "hono/jwt";
 import { authMiddleware } from "../Middlewares/authMiddleware";
-import {createBlogInput,updateBlogInput} from "pranaydwivedi444-zodvalidation-blog"
+import {
+  createBlogInput,
+  updateBlogInput,
+} from "pranaydwivedi444-zodvalidation-blog";
 const app = new Hono<{
   Bindings: {
     JWT_SECRET: string;
@@ -27,12 +30,16 @@ app.get("/bulk", async (c) => {
   //implementing bottom loading
   const primsa = c.get("prisma");
   const limit = c.req.query("limit") || 10;
-  const cursorId = c.req.query("cursor") || 0;
+  const cursorId = c.req.query("cursor") ?? undefined;
+  const validCursorId =
+    cursorId && cursorId !== "" && cursorId != null
+      ? { id: cursorId }
+      : undefined;
   try {
     const posts = await primsa.post.findMany({
       take: limit,
       skip: cursorId ? 1 : 0,
-      cursor: cursorId ? { id: cursorId } : undefined,
+      cursor: validCursorId,
       orderBy: {
         createdAt: "desc",
       },
@@ -74,9 +81,9 @@ app.post("/", async (c) => {
   const prisma = c.get("prisma");
   try {
     const body = await c.req.json();
-    //adding zod validation 
-    const {success} = createBlogInput.safeParse(body);
-     if(!success){
+    //adding zod validation
+    const { success } = createBlogInput.safeParse(body);
+    if (!success) {
       throw new Error("invalid inputs");
     }
     //take primsa and post blogs

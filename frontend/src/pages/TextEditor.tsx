@@ -55,7 +55,7 @@ function TextEditor() {
         init={editorConfig}
       />
       <Checkbox label="Publish" onChange={checkboxHandler} />
-      <Button classname="w-28" onClickHandler={postRequest} type="button">
+      <Button classname="max-w-32" onClickHandler={postRequest} type="button">
         {isChecked ? "Publish" : "Save"}
       </Button>
     </div>

@@ -1,15 +1,16 @@
-import ArticleCard from "../components/UI/ArticleCard"
-import useFetchBlogs from "../components/hooks/useFetchBlogs";
+import ArticleCard from "../components/UI/ArticleCard";
+
 import Skeleton from "../components/UI/Skeleton";
 import AlertComponent from "../components/UI/AlertComponent";
 import { DateModifier } from "../helperFunctions/helper";
 
-function Newsfeed() {
-   const { loading, showError, articlesData } = useFetchBlogs("blogs/bulk",true);
+import useFetchPostsWithLoad from "../components/hooks/useFetchPostsWithLoad";
 
-   if (loading) {
-      return <Skeleton />;
-    }
+function Newsfeed() {
+  const { loading, showError, articlesData } = useFetchPostsWithLoad( );
+  if (loading) {
+    return <Skeleton />;
+  }
   return (
     <>
       {showError && (
@@ -22,7 +23,7 @@ function Newsfeed() {
       <div className="bg-gray-100 px-2 py-10">
         {
           // @ts-ignore
-          articlesData?.posts && articlesData?.posts?.map((el, i) => {
+          articlesData?.posts &&  articlesData?.posts?.map((el, i) => {
               return (
                 <ArticleCard
                   key={el.id}
@@ -30,7 +31,9 @@ function Newsfeed() {
                   imgSrc="https://placehold.co/600x400/EEE/31343C"
                   title={el.title}
                   authorName={"unknown"}
-                  datePosted={DateModifier(el.createdAt)} id={el.id}                />
+                  datePosted={DateModifier(el.createdAt)}
+                  id={el.id}
+                />
               );
             })
         }
@@ -39,4 +42,4 @@ function Newsfeed() {
   );
 }
 
-export default Newsfeed
+export default Newsfeed;
