@@ -19,8 +19,7 @@ const app = new Hono<{
 //   //do Authenication here
 //   await next();
 // });
-//using auth middleware
-app.use("/*", authMiddleware);
+
 
 app.get("/", (c) => {
   return c.text("welcome to blogs");
@@ -76,6 +75,8 @@ app.get("/:id", async (c) => {
   }
 });
 
+//using auth middleware
+app.use("/*", authMiddleware);
 app.post("/", async (c) => {
   const authorID = c.get("authorId");
   const prisma = c.get("prisma");

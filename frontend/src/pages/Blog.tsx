@@ -41,7 +41,7 @@ function Blog() {
          { //@ts-ignore
           <ModalComponent content={articlesData.posts.content}/>}
         </div>
-        <div className="col-span-3 invisible md:visible">
+        <div className="col-span-3 invisible lg:visible">
           {" "}
           <AuthorProfileSideComponent />
         </div>

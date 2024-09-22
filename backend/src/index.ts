@@ -23,11 +23,12 @@ app.use("*", async (c, next) => {
   await next();
 });
 app.use(
-  "/api/*",
+  "*",
   cors({
-    origin: "https://medium-blog-worker-serverless.vercel.app/",
+    origin: "https://medium-blog-worker-serverless.vercel.app",
     credentials: true,
-    allowHeaders: ["Content-Type", "Authorization"],
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowHeaders: ["origin", "Content-Type", "Accept", "Authorization"],
   })
 );
 //forwarding requests to api routes

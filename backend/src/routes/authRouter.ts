@@ -52,6 +52,9 @@ app.post("/signup", async (c) => {
     const cookie_secret = c.env.COOKIE_SECRET;
     await setSignedCookie(c, "bearer_token", JWT, cookie_secret, {
       expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      sameSite: "None",
+      secure: true,
+      httpOnly: true,
     });
     // return jwt token
     return c.json({
@@ -87,6 +90,9 @@ app.post("/signin", async (c) => {
   const cookie_secret = c.env.COOKIE_SECRET;
   await setSignedCookie(c, "bearer_token", jwt, cookie_secret, {
     expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    sameSite: "None",
+    secure: true,
+    httpOnly: true,
   });
   return c.json({ message :"successfully signed in ", success: true });
 });
