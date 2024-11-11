@@ -2,7 +2,7 @@ export const backendUrl = "https://backend.pranaydwivedi444.workers.dev/api/v1";
 // export const backendUrl = "http://127.0.0.1:8787/api/v1";
 export const navbarConfig = {
   logoSrc:
-    "https://upload.wikimedia.org/wikipedia/commons/0/0d/Medium_%28website%29_logo.svg",
+    "https://cdn-icons-png.flaticon.com/512/686/686112.png",
   logoAlt: "Logo",
   menuItems: [
     { href: "/blog/all", label: "Newsfeed" },
