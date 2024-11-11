@@ -25,7 +25,7 @@ app.use("*", async (c, next) => {
 app.use(
   "*",
   cors({
-    origin: "https://medium-blog-worker-serverless.vercel.app",
+    origin: "https://blog-worker-serverless.vercel.app/",
     credentials: true,
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowHeaders: ["origin", "Content-Type", "Accept", "Authorization"],
